@@ -203,6 +203,20 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`timer` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `ssafit_final`.`loginuser`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafit_final`.`loginuser` (
+  `loginid` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`loginid`),
+  CONSTRAINT `loginuser_user`
+    FOREIGN KEY (`loginid`)
+    REFERENCES `ssafit_final`.`user` (`loginid`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
 USE `ssafit_final`;
 
 DELIMITER $$
