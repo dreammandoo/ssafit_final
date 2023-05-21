@@ -21,7 +21,7 @@
 	</select>
 	
 	<insert id="insertUser" parameterType="User">
-		INSERT INTO user (loginid, password, nickname, email, age, gender, img)
+		INSERT INTO user
 		VALUES (#{loginid}, #{password}, #{nickname}, #{email}, #{age}, #{gender}, #{img})
 	</insert>
 	

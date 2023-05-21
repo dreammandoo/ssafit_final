@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.board.model.dao.UserDao;
 import com.ssafy.board.model.dto.User;
@@ -19,21 +20,12 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectAll();
 	}
 
+	@Transactional
 	@Override
-	public User signup(User user) {
-		userDao.insertUser(user);
-		return user;
+	public int signup(User user) {
+		return userDao.insertUser(user);
 	}
 
-	@Override
-	public User login(String loginid, String password) {
-		
-		User tmp = userDao.selectByLoginId(loginid);
-		
-		if(tmp != null && tmp.getPassword().equals(password))
-			return tmp;
-		return null;
-	}
 
 	@Override
 	public User getUserById(int id) {

@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`apply` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+ALTER TABLE apply ADD UNIQUE (recruitid, creatorid);
 
 
 -- -----------------------------------------------------
@@ -95,26 +96,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ssafit_final`.`comment` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `recruitid` INT UNSIGNED NOT NULL,
-  `writerid` INT UNSIGNED NOT NULL,
+  `creatorid` INT UNSIGNED NOT NULL,
   `title` VARCHAR(45) NOT NULL,
   `content` VARCHAR(100) NOT NULL,
   `createdtime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`id`),
   INDEX `recruitid_idx` (`recruitid` ASC) VISIBLE,
-  INDEX `writerid_idx` (`writerid` ASC) VISIBLE,
+  INDEX `creatorid_idx` (`creatorid` ASC) VISIBLE,
   CONSTRAINT `fk_comment_recruit`
     FOREIGN KEY (`recruitid`)
     REFERENCES `ssafit_final`.`recruit` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_comment_user`
-    FOREIGN KEY (`writerid`)
+    FOREIGN KEY (`creatorid`)
     REFERENCES `ssafit_final`.`user` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
-
+ALTER TABLE comment ADD UNIQUE (recruitid, creatorid);
 -- -----------------------------------------------------
 -- Table `ssafit_final`.`recommend`
 -- -----------------------------------------------------
@@ -203,7 +203,6 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`timer` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `ssafit_final`.`loginuser`
 -- -----------------------------------------------------
@@ -233,7 +232,6 @@ BEGIN
         ELSE 7
 	END;
 END;$$
-
 
 DELIMITER ;
 
