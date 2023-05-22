@@ -40,7 +40,7 @@ public class BoardRestController {
 		List<Board> list = boardService.search(condition); //검색 조건이 있으면 그걸로 조회
 		
 		if(list == null || list.size() == 0)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<List<Board>>(list, HttpStatus.OK);
 	}
 	//2. 상세보기
@@ -60,7 +60,7 @@ public class BoardRestController {
 		//DB에 댕겨올때 테이블을 변경하는 작업이라면 무엇인가를 하나 돌려줌... 무엇? 테이블을 건드린 행의 개수가 반환이된다.
 		//만약에 0이라면 이거 등록 안된거니까 등록 안됬어요 ㅠㅠ 하고 프론트에게 돌려주어야 겠다.
 		//그게 아니라면 잘 등록이 된거니까... OK 보내도 가넝
-		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
+		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}
 	
 	//4. 삭제

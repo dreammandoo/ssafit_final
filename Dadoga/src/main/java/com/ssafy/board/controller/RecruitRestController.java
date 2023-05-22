@@ -4,25 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.Apply;
 import com.ssafy.board.model.dto.Comment;
 import com.ssafy.board.model.dto.Recruit;
-import com.ssafy.board.model.dto.User;
 import com.ssafy.board.model.service.ApplyService;
 import com.ssafy.board.model.service.CommentService;
 import com.ssafy.board.model.service.RecruitService;
@@ -45,7 +39,7 @@ public class RecruitRestController {
 	public ResponseEntity<?> recruitList() {
 		List<Recruit> list = recruitService.selectAll();
 		if(list==null)
-			return new ResponseEntity<String>("no list", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no list", HttpStatus.OK);
 		
 		return new ResponseEntity<List<Recruit>>(list, HttpStatus.OK);
 	}
@@ -70,12 +64,12 @@ public class RecruitRestController {
 	
 	// 모임글 작성
 	@PostMapping("/recruit")
-	public ResponseEntity<String> recruitWrite(Recruit recruit) {
+	public ResponseEntity<?> recruitWrite(Recruit recruit) {
 		int num = recruitService.insert(recruit);
 		if(num==0) 
-			return new ResponseEntity<String>("recruit insertion failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("recruit insertion failed", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("recruit inserted", HttpStatus.CREATED);
+			return new ResponseEntity<Integer>(recruit.getId(), HttpStatus.OK);
 	}
 
 	// 모임글 수정
@@ -84,9 +78,9 @@ public class RecruitRestController {
 		int num = recruitService.update(recruit);
 		
 		if(num==0) 
-			return new ResponseEntity<String>("recruit update failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("recruit update failed", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("recruit updated", HttpStatus.CREATED);
+			return new ResponseEntity<String>("recruit updated", HttpStatus.OK);
 	}
 
 	// 모임글 삭제
@@ -95,7 +89,7 @@ public class RecruitRestController {
 		int num = recruitService.delete(id);
 		System.out.println(num);
 		if(num==0) 
-			return new ResponseEntity<String>("recruit delete failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("recruit delete failed", HttpStatus.OK);
 		else 
 			return new ResponseEntity<String>("recruit deleted", HttpStatus.OK);
 	}
@@ -107,7 +101,7 @@ public class RecruitRestController {
 		List<Recruit> list = recruitService.selectMy(writerid);
 		
 		if(list==null)
-			return new ResponseEntity<String>("no my recruit", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no my recruit", HttpStatus.OK);
 		else
 			return new ResponseEntity<List<Recruit>>(list, HttpStatus.OK);
 		

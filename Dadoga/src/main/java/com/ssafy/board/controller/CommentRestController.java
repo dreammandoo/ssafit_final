@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.board.model.dto.Apply;
 import com.ssafy.board.model.dto.Comment;
 import com.ssafy.board.model.service.CommentService;
 import io.swagger.annotations.Api;
@@ -36,9 +34,9 @@ public class CommentRestController {
 			System.out.println(e);
 		}
 		if(num==0) 
-			return new ResponseEntity<String>("comment insertion failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("comment insertion failed", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("comment inserted", HttpStatus.CREATED);
+			return new ResponseEntity<String>("comment inserted", HttpStatus.OK);
 	}
 
 	
@@ -49,7 +47,7 @@ public class CommentRestController {
 		int num = commentService.deleteComment(creatorid, recruitid);
 		System.out.println(num);
 		if(num==0) 
-			return new ResponseEntity<String>("comment delete failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("comment delete failed", HttpStatus.OK);
 		else 
 			return new ResponseEntity<String>("comment deleted", HttpStatus.OK);
 	}
@@ -59,7 +57,7 @@ public class CommentRestController {
 	public ResponseEntity<?> myComment(@PathVariable("creatorid") int creatorid){
 		List<Comment> list = commentService.selectMy(creatorid);
 		if(list==null)
-			return new ResponseEntity<String>("no my comment", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no my comment", HttpStatus.OK);
 		else
 			return new ResponseEntity<List<Comment>>(list, HttpStatus.OK);
 	}

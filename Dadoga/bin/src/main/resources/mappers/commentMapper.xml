@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.model.dao.CommentDao">
+	<select id="selectAll" resultType="Comment">
+		SELECT *
+		FROM comment
+	</select>
+	
+	<select id="selectByRecruitId" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM comment
+		WHERE recruitid = #{recruitid}
+	</select>
+	
+	<select id="selectByCreatorId" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM comment
+		WHERE creatorid = #{creatorid}
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM comment
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="insertComment" parameterType="Comment">
+		INSERT INTO comment(recruitid, creatorid, title, content)
+		VALUES (#{recruitid}, #{creatorid}, #{title}, #{content})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM comment
+		WHERE creatorid = #{creatorid} AND recruitid = #{recruitid}
+	</delete>
+	
+	<select id="selectMy" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM comment
+		WHERE creatorid = #{creatorid}
+	</select>
+	
+</mapper>

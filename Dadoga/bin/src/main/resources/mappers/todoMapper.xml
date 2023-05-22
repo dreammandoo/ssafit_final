@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.model.dao.TodoDao">
+	<select id="selectMy" resultType="Todo">
+		SELECT *
+		FROM todo
+		WHERE userid = #{userid}
+	</select>
+	
+	<insert id="insertTodo" parameterType="Todo">
+		INSERT INTO todo (userid, date, content)
+		VALUES (#{userid}, #{date}, #{content})
+	</insert>
+	
+	<delete id="deleteTodo" parameterType="int">
+		DELETE FROM todo
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="updateDone" parameterType="int">
+		UPDATE todo
+		SET done = CASE
+		WHEN done = 0 THEN 1
+		ELSE 0
+		END
+		WHERE id = #{id}
+	</update>
+	
+	
+	
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.model.dao.MessageDao">
+	<select id="selectMy" resultType="Message">
+		SELECT *
+		FROM message
+		WHERE senderid = #{id} OR receiverid = #{id}
+		ORDER BY createdtime DESC;
+	</select>
+	
+	<insert id="sendMessage" parameterType="Message">
+		INSERT INTO message (senderid, receiverid, title, content)
+		VALUES (#{senderid}, #{receiverid}, #{title}, #{content})
+	</insert>
+	
+	<update id="checkMessage" parameterType="Message">
+		UPDATE message
+		SET checked = 1
+		WHERE senderid = #{senderid}
+		AND receiverid = #{receiverid}
+	</update>
+	
+	
+	
+</mapper>

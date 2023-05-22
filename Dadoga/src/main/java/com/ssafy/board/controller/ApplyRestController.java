@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.Apply;
@@ -35,9 +34,9 @@ public class ApplyRestController {
 			System.out.println(e);
 		}
 		if(num==0) 
-			return new ResponseEntity<String>("apply insertion failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("apply insertion failed", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("apply inserted", HttpStatus.CREATED);
+			return new ResponseEntity<String>("apply inserted", HttpStatus.OK);
 	}
 
 	// 지원글 삭제
@@ -46,7 +45,7 @@ public class ApplyRestController {
 		int num = applyService.deleteApply(creatorid, recruitid);
 		System.out.println(num);
 		if(num==0) 
-			return new ResponseEntity<String>("apply delete failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("apply delete failed", HttpStatus.OK);
 		else 
 			return new ResponseEntity<String>("apply deleted", HttpStatus.OK);
 	}
@@ -56,7 +55,7 @@ public class ApplyRestController {
 	public ResponseEntity<?> myApply(@PathVariable("creatorid") int creatorid){
 		List<Apply> list = applyService.selectMy(creatorid);
 		if(list==null)
-			return new ResponseEntity<String>("no my apply", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no my apply", HttpStatus.OK);
 		else
 			return new ResponseEntity<List<Apply>>(list, HttpStatus.OK);
 	}

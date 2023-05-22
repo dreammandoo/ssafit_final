@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +37,7 @@ public class UserRestController {
 	public ResponseEntity<?> userDetail(@PathVariable("id")int id) {
 		User user = userService.getUserById(id);
 		if(user == null)
-			return new ResponseEntity<String>("no user found", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no user found", HttpStatus.OK);
 		else
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
@@ -47,12 +46,30 @@ public class UserRestController {
 	@PostMapping("/signup")
 	public ResponseEntity<String> signup(User user) {
 		// 프론트에서 not null인 부분 제한 해주길 요망
-		int num = userService.signup(user);
+		List<User> list = userService.getUserList();
+		
+		for(User u: list) {
+			if(u.getLoginid().equals(user.getLoginid())) {
+				return new ResponseEntity<String>("duplicated loginId", HttpStatus.OK);
+			}
+			if(u.getEmail().equals(user.getEmail())) {
+				return new ResponseEntity<String>("duplicated email", HttpStatus.OK);
+			}
+			if(u.getNickname().equals(user.getNickname())) {
+				return new ResponseEntity<String>("duplicated nickname", HttpStatus.OK);
+			}
+		}
+		int num=0;
+		try {
+			num = userService.signup(user);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
 		if(num==0)
-			return new ResponseEntity<String>("sign up failed", HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<String>("regist failed", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("sign up completed", HttpStatus.CREATED);
+			return new ResponseEntity<String>("regist complete", HttpStatus.OK);
 	}
 
 	// 로그인 (실제 수행)
@@ -72,9 +89,9 @@ public class UserRestController {
 		}
 		
 		if(usercnt==0)
-			return new ResponseEntity<String>("wrong loginId", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("wrong loginId", HttpStatus.OK);
 		else
-			return new ResponseEntity<String>("wrong password", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("wrong password", HttpStatus.OK);
 		
 		
 	}

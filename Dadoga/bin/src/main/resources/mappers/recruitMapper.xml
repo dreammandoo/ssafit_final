@@ -20,9 +20,9 @@
 		WHERE id = #{id}
 	</update>
 	
-	<insert id="insert" parameterType="Recruit" keyProperty="id" useGeneratedKeys="true">
-		INSERT INTO recruit(id, title, content, writerid, datetime, location, applierslimit, part, gender, img)
-		VALUES (#{id}, #{title}, #{content}, #{writerid}, #{datetime}, #{location}, #{applierslimit}, #{part}, #{gender}, #{img})
+	<insert id="insert" parameterType="Recruit">
+		INSERT INTO recruit(title, content, writerid, datetime, location, applierslimit, part, gender, img)
+		VALUES (#{title}, #{content}, #{writerid}, #{datetime}, #{location}, #{applierslimit}, #{part}, #{gender}, #{img})
 	</insert>
 	
 	<delete id="delete" parameterType="int">

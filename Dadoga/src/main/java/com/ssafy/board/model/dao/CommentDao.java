@@ -2,7 +2,6 @@ package com.ssafy.board.model.dao;
 
 import java.util.List;
 
-import com.ssafy.board.model.dto.Apply;
 import com.ssafy.board.model.dto.Comment;
 
 public interface CommentDao {
