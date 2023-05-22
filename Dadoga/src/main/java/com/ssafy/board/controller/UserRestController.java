@@ -1,6 +1,9 @@
 package com.ssafy.board.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.User;
 import com.ssafy.board.model.service.UserService;
+import com.ssafy.board.util.JwtUtil;
 
 import io.swagger.annotations.Api;
 
@@ -23,6 +27,9 @@ import io.swagger.annotations.Api;
 @Api(tags = "유저 컨트롤러")
 public class UserRestController {
 
+	@Autowired
+	private JwtUtil jwtUtil;
+	
 	@Autowired
 	private UserService userService;
 
@@ -74,7 +81,7 @@ public class UserRestController {
 
 	// 로그인 (실제 수행)
 	@PostMapping("/login")
-	public ResponseEntity<?> login(User user) {
+	public ResponseEntity<?> login(User user) throws UnsupportedEncodingException {
 		
 		List<User> list = userService.getUserList();
 		
@@ -82,12 +89,17 @@ public class UserRestController {
 		for(User u:list) {
 			if(u.getLoginid().equals(user.getLoginid())) {
 				if(u.getPassword().equals(user.getPassword())) {
-					return new ResponseEntity<User>(u, HttpStatus.OK);
+					
+					Map<String, Object> result = new HashMap<String, Object>();
+					result.put("access-token", jwtUtil.createToken("loginid",u.getLoginid()));
+					result.put("user", u);
+					result.put("message", "login success");
+					return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 				}
 				usercnt++;
 			}
 		}
-		
+		System.out.println(usercnt);
 		if(usercnt==0)
 			return new ResponseEntity<String>("wrong loginId", HttpStatus.OK);
 		else
