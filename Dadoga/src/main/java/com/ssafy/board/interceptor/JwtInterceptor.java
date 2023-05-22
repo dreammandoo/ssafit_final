@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -26,13 +27,14 @@ public class JwtInterceptor implements HandlerInterceptor {
 		String token = request.getHeader(HEADER_AUTH);
 		System.out.println(token);
 		if(token != null) {
-			System.out.println("토큰분석중");
-			jwtUtil.valid(token);
-			System.out.println("valid valid");
-			return true;
+			if(jwtUtil.valid(token)) {
+				return true;
+			} else {
+				response.setStatus(401);
+				return false;
+			}
 		}
-		
-		
+		response.setStatus(401);
 		return false;
 	}
 }
