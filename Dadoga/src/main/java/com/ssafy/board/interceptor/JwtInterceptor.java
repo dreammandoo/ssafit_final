@@ -34,7 +34,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 				return false;
 			}
 		}
-		response.setStatus(401);
-		return false;
+//		response.setStatus(401);
+		return true;
 	}
 }

@@ -112,7 +112,6 @@ public class UserRestController {
 	@GetMapping("logout")
 	public ResponseEntity<Void> logout(HttpSession session) {
 //		session.removeAttribute("loginUser");
-		session.invalidate();
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
