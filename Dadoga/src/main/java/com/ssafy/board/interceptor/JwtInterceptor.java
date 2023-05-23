@@ -21,19 +21,19 @@ public class JwtInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		if(request.getMethod().contentEquals("OPTIONS"))
-			return true;
-		
-		String token = request.getHeader(HEADER_AUTH);
-		System.out.println(token);
-		if(token != null) {
-			if(jwtUtil.valid(token)) {
-				return true;
-			} else {
-				response.setStatus(401);
-				return false;
-			}
-		}
+//		if(request.getMethod().contentEquals("OPTIONS"))
+//			return true;
+//		
+//		String token = request.getHeader(HEADER_AUTH);
+//		System.out.println(token);
+//		if(token != null) {
+//			if(jwtUtil.valid(token)) {
+//				return true;
+//			} else {
+//				response.setStatus(401);
+//				return false;
+//			}
+//		}
 //		response.setStatus(401);
 		return true;
 	}

@@ -16,7 +16,7 @@
 	
 	<update id="update" parameterType="Recruit">
 		UPDATE recruit
-		SET title=#{title}, content=#{content}, datetime=#{datetime}, location=#{location}, applierslimit=#{applierslimit}, part=#{part}, gender=#{gender} 
+		SET done=#{done} title=#{title}, content=#{content}, datetime=#{datetime}, location=#{location}, applierslimit=#{applierslimit}, part=#{part}, gender=#{gender} 
 		WHERE id = #{id}
 	</update>
 	
