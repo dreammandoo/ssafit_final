@@ -65,7 +65,13 @@ public class RecruitRestController {
 	// 모임글 작성
 	@PostMapping("/recruit")
 	public ResponseEntity<?> recruitWrite(Recruit recruit) {
-		int num = recruitService.insert(recruit);
+		int num = 0;
+		try {
+			num = recruitService.insert(recruit);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<String>("recruit insertion failed", HttpStatus.OK);
+		}
 		if(num==0) 
 			return new ResponseEntity<String>("recruit insertion failed", HttpStatus.OK);
 		else
@@ -75,8 +81,13 @@ public class RecruitRestController {
 	// 모임글 수정
 	@PutMapping("/recruit")
 	public ResponseEntity<String> recruitUpdate(Recruit recruit) {
-		int num = recruitService.update(recruit);
-		
+		int num = 0;
+		try {
+			num = recruitService.update(recruit);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<String>("recruit update failed", HttpStatus.OK);
+		}
 		if(num==0) 
 			return new ResponseEntity<String>("recruit update failed", HttpStatus.OK);
 		else
