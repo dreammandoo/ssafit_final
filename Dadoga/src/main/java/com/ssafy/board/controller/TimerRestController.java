@@ -65,6 +65,7 @@ public class TimerRestController {
 			return new ResponseEntity<String>("timer modified", HttpStatus.OK);
 	}
 	
+	//타이머 하나 삭제
 	@DeleteMapping("/timer/{id}")
 	public ResponseEntity<String> deleteOneTimer(@PathVariable("id") int id) {
 		int num = 0;
@@ -81,6 +82,7 @@ public class TimerRestController {
 			return new ResponseEntity<String>("timer deleted", HttpStatus.OK);
 	}
 
+	// 내 타이머 다 삭제
 	@DeleteMapping("/timer/all/{userid}")
 	public ResponseEntity<String> deleteAllTimer(@PathVariable("userid") int userid) {
 		int num = 0;

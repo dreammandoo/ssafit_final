@@ -61,7 +61,7 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public int delApplier(int id) {
 		// TODO Auto-generated method stub
-		return delApplier(id);
+		return recruitDao.delApplier(id);
 	}
 
 }

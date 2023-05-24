@@ -48,7 +48,7 @@
 	<update id="delApplier" parameterType="int">
 		UPDATE recruit
 		SET appliers = CASE
-			WHEN appliers <![CDATA[ < ]]> applierslimit THEN appliers - 1
+			WHEN appliers <![CDATA[ > ]]> 0 THEN appliers - 1
 			ELSE appliers
 			END
 		WHERE id = #{id}
