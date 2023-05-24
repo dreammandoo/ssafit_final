@@ -12,5 +12,5 @@ public interface RecruitService {
 	public int update(Recruit recruit);
 	public int insert(Recruit recruit);
 	public int delete(int id);
-	
+	public int addApplier(int id);
 }

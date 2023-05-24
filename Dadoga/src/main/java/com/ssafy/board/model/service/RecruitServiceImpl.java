@@ -52,4 +52,10 @@ public class RecruitServiceImpl implements RecruitService {
 		return recruitDao.selectMy(writerid);
 	}
 
+	@Override
+	public int addApplier(int id) {
+		// TODO Auto-generated method stub
+		return recruitDao.addApplier(id);
+	}
+
 }

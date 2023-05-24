@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.Apply;
+import com.ssafy.board.model.dto.Recruit;
 import com.ssafy.board.model.service.ApplyService;
+import com.ssafy.board.model.service.RecruitService;
+
 import io.swagger.annotations.Api;
 
 @RestController
@@ -22,17 +25,39 @@ public class ApplyRestController {
 	@Autowired
 	private ApplyService applyService;
 
+	@Autowired
+	private RecruitService recruitService;
+	
 	// 지원글 작성
 	@PostMapping("/apply")
 	public ResponseEntity<String> applyWrite(Apply apply) {
 
-		int num=0;
+		// 지원자가 꽉찼는지 확인
+		int rid = apply.getRecruitid();
+		int lim = recruitService.select(rid).getApplierslimit();
+		int cur = recruitService.select(rid).getAppliers();
+		if(cur>=lim) {
+			return new ResponseEntity<String>("apply full", HttpStatus.OK);
+		}
 		
+		// 지원한 적 있는지 확인
+		int myid = apply.getCreatorid();
+		List<Apply> applist = applyService.selectAll();
+		for(Apply a: applist) {
+			if(a.getCreatorid()==myid && a.getRecruitid()==rid) {
+				return new ResponseEntity<String>("already applied", HttpStatus.OK);
+			}
+		}
+		
+		int num=0;
 		try {
 			num = applyService.insertApply(apply);
+			recruitService.addApplier(rid);
+			System.out.println("applier added");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		
 		if(num==0) 
 			return new ResponseEntity<String>("apply insertion failed", HttpStatus.OK);
 		else

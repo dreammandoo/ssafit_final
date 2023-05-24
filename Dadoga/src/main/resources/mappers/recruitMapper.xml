@@ -16,7 +16,7 @@
 	
 	<update id="update" parameterType="Recruit">
 		UPDATE recruit
-		SET done=#{done} title=#{title}, content=#{content}, datetime=#{datetime}, location=#{location}, applierslimit=#{applierslimit}, part=#{part}, gender=#{gender} 
+		SET done=#{done}, title=#{title}, content=#{content}, datetime=#{datetime}, location=#{location}, applierslimit=#{applierslimit}, part=#{part}, gender=#{gender} 
 		WHERE id = #{id}
 	</update>
 	
@@ -35,5 +35,11 @@
 		FROM recruit
 		WHERE writerid = #{writerid}
 	</select>
+	
+	<update id="addApplier" parameterType="int">
+		UPDATE recruit
+		SET appliers = appliers + 1
+		WHERE id = #{id}
+	</update>
 	
 </mapper>
