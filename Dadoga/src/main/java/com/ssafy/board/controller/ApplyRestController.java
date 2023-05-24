@@ -55,6 +55,7 @@ public class ApplyRestController {
 			recruitService.addApplier(rid);
 		} catch (Exception e) {
 			System.out.println(e);
+			return new ResponseEntity<String>("apply insertion failed", HttpStatus.OK);
 		}
 		
 		if(num==0) 
