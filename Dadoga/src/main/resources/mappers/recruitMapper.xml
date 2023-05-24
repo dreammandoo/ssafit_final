@@ -6,6 +6,7 @@
 	<select id="selectAll" resultType="Recruit">
 		SELECT *
 		FROM recruit
+		ORDER BY createdtime DESC
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="Recruit">

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.Comment;
+import com.ssafy.board.model.service.ApplyService;
 import com.ssafy.board.model.service.CommentService;
 import com.ssafy.board.model.service.RecruitService;
 
@@ -24,6 +25,8 @@ public class CommentRestController {
 	@Autowired
 	private CommentService commentService;
 
+	@Autowired
+	private ApplyService applyService;
 	
 	// 후기글 작성
 	@PostMapping("/comment")
@@ -31,6 +34,13 @@ public class CommentRestController {
 
 		int rid = comment.getRecruitid();
 		int myid = comment.getCreatorid();
+		
+		// 신청한 적 있는지 확인
+		if(applyService.selectByCreatorId(myid)==null) {
+			return new ResponseEntity<String>("need to apply first", HttpStatus.OK);
+		}
+		
+		// 이미 작성했는지 확인
 		List<Comment> comlist = commentService.selectAll();
 		for(Comment c: comlist) {
 			if(c.getCreatorid()==myid && c.getRecruitid()==rid) {
@@ -38,12 +48,13 @@ public class CommentRestController {
 			}
 		}
 		
-		
+		// 
 		int num=0;
 		try {
 			num = commentService.insertComment(comment);
 		} catch (Exception e) {
 			System.out.println(e);
+			return new ResponseEntity<String>("comment insertion failed", HttpStatus.OK);
 		}
 		if(num==0) 
 			return new ResponseEntity<String>("comment insertion failed", HttpStatus.OK);

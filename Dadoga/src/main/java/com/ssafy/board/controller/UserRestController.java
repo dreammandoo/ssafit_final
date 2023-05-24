@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -115,4 +117,31 @@ public class UserRestController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
+	// 회원탈퇴
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> recruitDelete(@PathVariable("id") int id){
+		int num = userService.deleteUser(id);
+		if(num==0) 
+			return new ResponseEntity<String>("user delete failed", HttpStatus.OK);
+		else 
+			return new ResponseEntity<String>("user deleted", HttpStatus.OK);
+	}
+	
+	// 회원정보수정
+	@PutMapping("")
+	public ResponseEntity<String> updateDone(User user) {
+		int num=0;
+		try {
+			num = userService.updateUser(user);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<String>("user modify failed", HttpStatus.OK);
+		}
+		
+		if(num==0) 
+			return new ResponseEntity<String>("user modify failed", HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("user modified", HttpStatus.OK);
+	}
+	
 }

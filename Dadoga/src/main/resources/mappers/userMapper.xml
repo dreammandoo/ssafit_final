@@ -25,4 +25,15 @@
 		VALUES (#{loginid}, #{password}, #{nickname}, #{email}, #{age}, #{gender}, #{img})
 	</insert>
 	
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE user
+		SET loginid=#{loginid}, password=#{password}, nickname=#{nickname}, email=#{email}, age=#{age}, gender=#{gender}, img=#{img}
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

@@ -29,9 +29,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(int id) {
-
 		User tmp = userDao.selectById(id);
-		
 		return tmp;
 	}
 
@@ -39,6 +37,16 @@ public class UserServiceImpl implements UserService {
 	public User getUserByLoginId(String loginid) {
 		User tmp = userDao.selectByLoginId(loginid);
 		return tmp;
+	}
+
+	@Override
+	public int deleteUser(int id) {
+		return userDao.deleteUser(id);
+	}
+
+	@Override
+	public int updateUser(User user) {
+		return userDao.updateUser(user);
 	}
 
 }

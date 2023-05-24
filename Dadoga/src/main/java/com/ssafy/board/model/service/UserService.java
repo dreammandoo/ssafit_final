@@ -9,4 +9,6 @@ public interface UserService {
 	public User getUserById(int id);
 	public User getUserByLoginId(String loginid);
 	public int signup(User user);
+	public int deleteUser(int id);
+	public int updateUser(User user);
 }

@@ -9,4 +9,6 @@ public interface UserDao {
 	public int insertUser(User user);
 	public User selectById(int id);
 	public User selectByLoginId(String loginid);
+	public int deleteUser(int id);
+	public int updateUser(User user);
 }
