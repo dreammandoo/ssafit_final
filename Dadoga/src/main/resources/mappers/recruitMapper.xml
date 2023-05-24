@@ -38,7 +38,19 @@
 	
 	<update id="addApplier" parameterType="int">
 		UPDATE recruit
-		SET appliers = appliers + 1
+		SET appliers = CASE
+			WHEN appliers < applierslimit THEN appliers + 1
+			ELSE appliers
+			END
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delApplier" parameterType="int">
+		UPDATE recruit
+		SET appliers = CASE
+			WHEN appliers < applierslimit THEN appliers + 1
+			ELSE appliers
+			END
 		WHERE id = #{id}
 	</update>
 	

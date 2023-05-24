@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.board.model.dto.Comment;
 import com.ssafy.board.model.service.CommentService;
+import com.ssafy.board.model.service.RecruitService;
+
 import io.swagger.annotations.Api;
 
 @RestController
@@ -22,12 +24,22 @@ public class CommentRestController {
 	@Autowired
 	private CommentService commentService;
 
+	
 	// 후기글 작성
 	@PostMapping("/comment")
 	public ResponseEntity<String> commentWrite(Comment comment) {
 
-		int num=0;
+		int rid = comment.getRecruitid();
+		int myid = comment.getCreatorid();
+		List<Comment> comlist = commentService.selectAll();
+		for(Comment c: comlist) {
+			if(c.getCreatorid()==myid && c.getRecruitid()==rid) {
+				return new ResponseEntity<String>("already commented", HttpStatus.OK);
+			}
+		}
 		
+		
+		int num=0;
 		try {
 			num = commentService.insertComment(comment);
 		} catch (Exception e) {

@@ -58,4 +58,10 @@ public class RecruitServiceImpl implements RecruitService {
 		return recruitDao.addApplier(id);
 	}
 
+	@Override
+	public int delApplier(int id) {
+		// TODO Auto-generated method stub
+		return delApplier(id);
+	}
+
 }

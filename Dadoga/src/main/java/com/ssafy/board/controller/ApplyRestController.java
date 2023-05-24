@@ -53,7 +53,6 @@ public class ApplyRestController {
 		try {
 			num = applyService.insertApply(apply);
 			recruitService.addApplier(rid);
-			System.out.println("applier added");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -71,8 +70,10 @@ public class ApplyRestController {
 		System.out.println(num);
 		if(num==0) 
 			return new ResponseEntity<String>("apply delete failed", HttpStatus.OK);
-		else 
+		else {
+			recruitService.delApplier(recruitid);
 			return new ResponseEntity<String>("apply deleted", HttpStatus.OK);
+		}
 	}
 
 	// 나의 지원글
