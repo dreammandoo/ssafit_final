@@ -8,4 +8,6 @@ public interface TimerDao {
 	public List<Timer> selectMy(int userid);
 	public int insertTimer(Timer timer);
 	public int updateTimer(Timer timer);
+	public int deleteOne(int id);
+	public int deleteAll(int userid);
 }

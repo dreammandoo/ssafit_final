@@ -39,7 +39,7 @@
 	<update id="addApplier" parameterType="int">
 		UPDATE recruit
 		SET appliers = CASE
-			WHEN appliers < applierslimit THEN appliers + 1
+			WHEN appliers <![CDATA[ < ]]> applierslimit THEN appliers + 1
 			ELSE appliers
 			END
 		WHERE id = #{id}
@@ -48,10 +48,11 @@
 	<update id="delApplier" parameterType="int">
 		UPDATE recruit
 		SET appliers = CASE
-			WHEN appliers < applierslimit THEN appliers + 1
+			WHEN appliers <![CDATA[ < ]]> applierslimit THEN appliers - 1
 			ELSE appliers
 			END
 		WHERE id = #{id}
 	</update>
+	
 	
 </mapper>

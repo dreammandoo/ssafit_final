@@ -32,4 +32,16 @@ public class TimerServiceImpl implements TimerService {
 		return timerDao.updateTimer(timer);
 	}
 
+	@Transactional
+	@Override
+	public int deleteOne(int id) {
+		return timerDao.deleteOne(id);
+	}
+
+	@Transactional
+	@Override
+	public int deleteAll(int userid) {
+		return timerDao.deleteAll(userid);
+	}
+
 }

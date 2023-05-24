@@ -20,6 +20,14 @@
 		WHERE id = #{id}
 	</update>
 	
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM timer
+		WHERE id = #{id}
+	</delete>
 	
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM timer
+		WHERE userid = #{userid}
+	</delete>
 	
 </mapper>
