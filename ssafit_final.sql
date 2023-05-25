@@ -5,6 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema ssafit_final
 -- -----------------------------------------------------
 
@@ -23,12 +26,12 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`user` (
   `password` VARCHAR(45) NOT NULL,
   `nickname` VARCHAR(45) NOT NULL DEFAULT 'userid',
   `email` VARCHAR(45) NOT NULL,
-  `age` INT UNSIGNED NULL,
+  `age` INT UNSIGNED NULL DEFAULT NULL,
   `createdtime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP(),
   `exp` INT UNSIGNED NOT NULL DEFAULT 0,
   `level` INT UNSIGNED NOT NULL DEFAULT 1,
   `gender` TINYINT NOT NULL,
-  `img` VARCHAR(100) NULL,
+  `img` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `userid_UNIQUE` (`loginid` ASC) VISIBLE,
   UNIQUE INDEX `nickname_UNIQUE` (`nickname` ASC) VISIBLE)
@@ -51,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`recruit` (
   `appliers` INT UNSIGNED NOT NULL DEFAULT 0,
   `applierslimit` INT UNSIGNED NOT NULL,
   `createdtime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP(),
-  `img` VARCHAR(100) NULL,
+  `img` VARCHAR(100) NULL DEFAULT NULL,
   `done` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `writerid_idx` (`writerid` ASC) VISIBLE,
@@ -76,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`apply` (
   PRIMARY KEY (`id`),
   INDEX `recruitit_idx` (`recruitid` ASC) VISIBLE,
   INDEX `creatorid_idx` (`creatorid` ASC) VISIBLE,
+  UNIQUE INDEX (`recruitid` ASC, `creatorid` ASC) VISIBLE,
   CONSTRAINT `fk_apply_recruit`
     FOREIGN KEY (`recruitid`)
     REFERENCES `ssafit_final`.`recruit` (`id`)
@@ -88,7 +92,6 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`apply` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 ALTER TABLE apply ADD UNIQUE (recruitid, creatorid);
-
 
 -- -----------------------------------------------------
 -- Table `ssafit_final`.`comment`
@@ -103,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`comment` (
   PRIMARY KEY (`id`),
   INDEX `recruitid_idx` (`recruitid` ASC) VISIBLE,
   INDEX `creatorid_idx` (`creatorid` ASC) VISIBLE,
+  UNIQUE INDEX (`recruitid` ASC, `creatorid` ASC) VISIBLE,
   CONSTRAINT `fk_comment_recruit`
     FOREIGN KEY (`recruitid`)
     REFERENCES `ssafit_final`.`recruit` (`id`)
@@ -115,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`comment` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 ALTER TABLE comment ADD UNIQUE (recruitid, creatorid);
+
 -- -----------------------------------------------------
 -- Table `ssafit_final`.`recommend`
 -- -----------------------------------------------------
@@ -128,13 +133,13 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`recommend` (
   CONSTRAINT `fk_recommend_fromid`
     FOREIGN KEY (`fromid`)
     REFERENCES `ssafit_final`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_recommend_toid`
     FOREIGN KEY (`toid`)
     REFERENCES `ssafit_final`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -155,13 +160,13 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`message` (
   CONSTRAINT `fk_message_sender`
     FOREIGN KEY (`senderid`)
     REFERENCES `ssafit_final`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_message_receiver`
     FOREIGN KEY (`receiverid`)
     REFERENCES `ssafit_final`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -199,9 +204,10 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`timer` (
   CONSTRAINT `fk_timer_user`
     FOREIGN KEY (`userid`)
     REFERENCES `ssafit_final`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `ssafit_final`.`loginuser`
@@ -232,6 +238,7 @@ BEGIN
         ELSE 7
 	END;
 END;$$
+
 
 DELIMITER ;
 
