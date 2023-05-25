@@ -222,25 +222,6 @@ CREATE TABLE IF NOT EXISTS `ssafit_final`.`loginuser` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-USE `ssafit_final`;
-
-DELIMITER $$
-USE `ssafit_final`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `ssafit_final`.`user_AFTER_UPDATE` AFTER UPDATE ON `user` FOR EACH ROW
-BEGIN
-	UPDATE user
-    SET level = CASE
-		WHEN NEW.exp > 100 AND NEW.exp <= 200 THEN 2
-        WHEN NEW.exp > 200 AND NEW.exp <= 300 THEN 3
-        WHEN NEW.exp > 300 AND NEW.exp <= 400 THEN 4
-        WHEN NEW.exp > 400 AND NEW.exp <= 500 THEN 5
-        WHEN NEW.exp > 500 AND NEW.exp <= 600 THEN 6
-        ELSE 7
-	END;
-END;$$
-
-
-DELIMITER ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
